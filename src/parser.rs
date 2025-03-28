@@ -8,9 +8,9 @@ const LINE_CONTINUATION_REPLACEMENT: &str = " ";
 type ParseResult<T> = Result<T, ParseError>;
 #[derive(Debug, PartialEq, Eq)]
 pub struct ParseError {
-    pub(crate) line: usize,
-    pub(crate) col: usize,
-    pub(crate) msg: String,
+    pub line: usize,
+    pub col: usize,
+    pub msg: String,
 }
 
 impl Display for ParseError {
@@ -20,7 +20,7 @@ impl Display for ParseError {
 }
 
 #[derive(Debug)]
-pub(crate) struct Parser<'a> {
+pub struct Parser<'a> {
     cur: Option<char>,
     buf: Chars<'a>,
     line: usize,
@@ -61,7 +61,7 @@ impl<'a> Parser<'a> {
          }
     }
 
-    pub(crate) fn parse(&mut self) -> ParseResult<SystemdUnit> {
+    pub fn parse(&mut self) -> ParseResult<SystemdUnit> {
         self.parse_unit()
     }
 

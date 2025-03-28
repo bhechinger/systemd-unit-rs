@@ -4,8 +4,8 @@ use std::str::FromStr;
 use super::{parse_bool, quote_value, unquote_value};
 
 #[derive(Clone, Debug, Default, PartialEq)]
-pub(crate) struct Entries {
-    pub(crate) data: ListOrderedMultimap<EntryKey, EntryValue>,
+pub struct Entries {
+    pub data: ListOrderedMultimap<EntryKey, EntryValue>,
 }
 
 impl Default for &Entries {
@@ -15,9 +15,9 @@ impl Default for &Entries {
     }
 }
 
-pub(crate) type EntryKey = String;
+pub type EntryKey = String;
 
-pub(crate) type EntryRawValue = String;
+pub type EntryRawValue = String;
 
 #[derive(Clone, Default, Debug, PartialEq)]
 pub struct EntryValue {
@@ -92,4 +92,4 @@ impl FromStr for EntryValue {
     }
 }
 
-pub(crate) type SectionKey = String;
+pub type SectionKey = String;
