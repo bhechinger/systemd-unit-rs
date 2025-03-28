@@ -119,13 +119,13 @@ impl SystemdUnit {
     }
 
     /// Get an interator of values for all `key`s in all instances of `section`
-    pub fn lookup_all<S, K>(&self, section: S, key: K) -> impl DoubleEndedIterator<Item = &str>
+    pub fn lookup_all<S, K>(&self, section: S, key: K) -> impl DoubleEndedIterator<Item = String>
     where
         S: Into<String>,
         K: Into<String>,
     {
         self.lookup_all_values(section, key)
-            .map(|v| v.unquoted().as_str())
+            .map(|v| v.unquote())
     }
 
     /// Get an interator of values for all `key`s in all instances of `section`
@@ -174,13 +174,13 @@ impl SystemdUnit {
     }
 
     // Get the last value for `key` in all instances of `section`
-    pub fn lookup_last<S, K>(&self, section: S, key: K) -> Option<&str>
+    pub fn lookup_last<S, K>(&self, section: S, key: K) -> Option<String>
     where
         S: Into<String>,
         K: Into<String>,
     {
         self.lookup_last_value(section, key)
-            .map(|v| v.unquoted().as_str())
+            .map(|v| v.unquote())
     }
 
     // Get the last value for `key` in all instances of `section`
@@ -240,9 +240,9 @@ impl SystemdUnit {
     pub fn section_entries<S: Into<String>>(
         &self,
         name: S,
-    ) -> impl DoubleEndedIterator<Item = (&str, &str)> {
+    ) -> impl DoubleEndedIterator<Item = (&str, String)> {
         self.section_entry_values(name)
-            .map(|(k, v)| (k, v.unquoted().as_str()))
+            .map(|(k, v)| (k, v.unquote()))
     }
 
     pub fn section_entry_values<S: Into<String>>(
