@@ -124,8 +124,7 @@ impl SystemdUnit {
         S: Into<String>,
         K: Into<String>,
     {
-        self.lookup_all_values(section, key)
-            .map(|v| v.unquote())
+        self.lookup_all_values(section, key).map(|v| v.unquote())
     }
 
     /// Get an interator of values for all `key`s in all instances of `section`
@@ -179,8 +178,7 @@ impl SystemdUnit {
         S: Into<String>,
         K: Into<String>,
     {
-        self.lookup_last_value(section, key)
-            .map(|v| v.unquote())
+        self.lookup_last_value(section, key).map(|v| v.unquote())
     }
 
     // Get the last value for `key` in all instances of `section`
@@ -321,10 +319,16 @@ impl SystemdUnit {
         &self,
         output_path: &Path,
         service_name: &PathBuf,
+        overwrite: bool,
     ) -> io::Result<()> {
         let out_filename = output_path.join(service_name);
 
-        let out_file = File::create(&out_filename)?;
+        let out_file = File::options()
+            .truncate(overwrite)
+            .write(true)
+            .create(true)
+            .create_new(true)
+            .open(&out_filename)?;
         let mut writer = BufWriter::new(out_file);
 
         self.write_to(&mut writer)?;
