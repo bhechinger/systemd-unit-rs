@@ -319,12 +319,11 @@ impl SystemdUnit {
         &self,
         output_path: &Path,
         service_name: &PathBuf,
-        overwrite: bool,
     ) -> io::Result<()> {
         let out_filename = output_path.join(service_name);
 
         let out_file = File::options()
-            .truncate(overwrite)
+            .truncate(true)
             .write(true)
             .create(true)
             .create_new(true)
