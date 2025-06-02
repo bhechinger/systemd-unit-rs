@@ -326,7 +326,6 @@ impl SystemdUnit {
             .truncate(true)
             .write(true)
             .create(true)
-            .create_new(true)
             .open(&out_filename)?;
         let mut writer = BufWriter::new(out_file);
 
