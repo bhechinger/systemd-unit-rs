@@ -322,11 +322,7 @@ impl SystemdUnit {
     ) -> io::Result<()> {
         let out_filename = output_path.join(service_name);
 
-        let out_file = File::options()
-            .truncate(true)
-            .write(true)
-            .create(true)
-            .open(&out_filename)?;
+        let out_file = File::create(&out_filename)?;
         let mut writer = BufWriter::new(out_file);
 
         self.write_to(&mut writer)?;
